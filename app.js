@@ -15,11 +15,12 @@ $(document).ready(function(){
    //$('.target:nth-child(2)').addClass('animated swing'); //targetting 2nd element
    //$('.target:odd').addClass('animated swing'); //O based array
    $('.target:even').addClass('animated swing'); //targetting even numbers
-   $('.question').mouseover(function(){  //can also be written as .click(function(){}), .mouseover etc
-      $('.answer').html('jQuery is a great library!')
+    /*$('.question').mouseover(function(){  //can also be written as .click(function(){}), .mouseover etc
+      $('.answer').html('jQuery is a great library!')*/
    });
    var url = "http://hn.algolia.com/api/v1/search?query=javascript";
    $.getJSON(url, function(data){
+     //Log data and its type, we don't know for sure what we are getting back
      console.log(data);
      console.log(typeof data);
      if(Array.isArray(data.hits)){
@@ -28,13 +29,20 @@ $(document).ready(function(){
        console.log('not an array');
      }
 
+     /*$('.question').on('click', function(){
+       $('.answer').html('jQuery is great!')
+     })*/
+
      var allNews = data.hits; //20 hits, array
      var eachNews = '';
-     allNews.map(function(item, index, array){
+     allNews.map(function(item, index, array){  //apply map function on each item.title
+       $('.question').on('click', function(){
+         eachNews += "<div>";
+         eachNews += item.title;
+         eachNews += "<br/><br/>";
+         $('.answer').html(eachNews);
+       })
        
      })
 
    })
-
-
-})
